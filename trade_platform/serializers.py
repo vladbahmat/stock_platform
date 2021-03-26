@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from trade_platform.models import *
+from trade_platform.models import Item, Inventory, WatchList, Offer
 
 
 class InventorySerializer(serializers.ModelSerializer):

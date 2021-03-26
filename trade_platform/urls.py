@@ -1,6 +1,8 @@
 from django.urls import path, include
-from rest_framework_simplejwt import views
 from rest_framework import routers
+from rest_framework_simplejwt import views
+
+
 from trade_platform.views import InventoryView, WatchListView, ItemView, OfferView
 
 

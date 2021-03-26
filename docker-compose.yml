@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:latest
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/13/main
+    env_file:
+      - ./.env.dev
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    env_file:
+      - ./.env.dev
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A stock_platform worker -B -E -l info
+    volumes:
+      - .:/code
+    env_file:
+      - ./.env.dev
+    depends_on:
+      - db
+      - redis
+      - web
+

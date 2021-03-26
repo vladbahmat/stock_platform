@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import datetime
+from datetime import timedelta
+import os
+from stock_platform.celery import app
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,16 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'tknrp$a-jvl4kpi*8visfwu35kxd4rnaqg*k$qdun0kg6axjki'
-
+SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-#AUTH_USER_MODEL = 'trade_platform.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'trade_platform',
+    'celery',
 ]
 
 REST_FRAMEWORK = {
@@ -50,6 +52,16 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
+}
+
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+
+app.conf.beat_schedule = {
+    'offer-find': {
+        'task': 'trade_platform.tasks.offer',
+        'schedule': timedelta(seconds=60),
+    },
 }
 
 SIMPLE_JWT = {
@@ -97,8 +109,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'stock_platform',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
+        'PASSWORD': 'Lipetsk4859',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 

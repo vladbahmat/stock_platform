@@ -2,26 +2,36 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin, RetrieveModelMixin, CreateModelMixin
-from trade_platform.serializers import *
 
 
-class InventoryView(viewsets.GenericViewSet, ListModelMixin):
+from trade_platform.serializers import ItemSerializer, OfferSerializer, InventorySerializer, \
+    UpdateItemSerializer, UpdateOfferSerializer, DetailItemSerializer, DetailWatchListSerializer, \
+    WatchListSerializer
+from trade_platform.models import Inventory, Item, WatchList, Offer
+
+
+class InventoryView(viewsets.GenericViewSet,
+                    ListModelMixin):
     permission_classes = (IsAuthenticated,)
     serializer_class = InventorySerializer
+    queryset = Inventory.objects.all()
 
     def list(self, request, *args, **kwargs):
-        queryset = Inventory.objects.filter(person_id=Profile.objects.get(user_id=request.user.id))
+        queryset = self.get_queryset().filter(person__user=request.user)
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
 
 
-class WatchListView(viewsets.GenericViewSet, ListModelMixin, UpdateModelMixin, RetrieveModelMixin):
+class WatchListView(viewsets.GenericViewSet,
+                    ListModelMixin,
+                    UpdateModelMixin,
+                    RetrieveModelMixin):
     permission_classes = (IsAuthenticated,)
     queryset = WatchList.objects.all()
-    http_method_names = ['get', 'patch']
+    http_method_names = ('get', 'patch')
     serializer_classes_by_action = {
-        'list': DetailWatchListSerializer,
-        'retrieve': WatchListSerializer,
+        'list': WatchListSerializer,
+        'retrieve': DetailWatchListSerializer,
         'update': WatchListSerializer,
     }
 
@@ -33,17 +43,19 @@ class WatchListView(viewsets.GenericViewSet, ListModelMixin, UpdateModelMixin, R
         return self.serializer_classes_by_action.get(self.action, WatchListSerializer)
 
     def list(self, request, *args, **kwargs):
-        print(self.get_serializer_class())
         queryset = request.user.profile.watchlist
-        serializer = self.get_serializer_class()(queryset)
+        serializer = self.get_serializer(queryset)
         return Response(serializer.data)
 
 
-class ItemView(viewsets.GenericViewSet, ListModelMixin, UpdateModelMixin, RetrieveModelMixin,
+class ItemView(viewsets.GenericViewSet,
+               ListModelMixin,
+               UpdateModelMixin,
+               RetrieveModelMixin,
                CreateModelMixin):
     permission_classes = (IsAuthenticated,)
     queryset = Item.objects.all()
-    http_method_names = ['get', 'post', 'patch']
+    http_method_names = ('get', 'post', 'patch')
     serializer_classes_by_action = {
         'list': ItemSerializer,
         'retrieve': DetailItemSerializer,
@@ -59,7 +71,10 @@ class ItemView(viewsets.GenericViewSet, ListModelMixin, UpdateModelMixin, Retrie
         return self.serializer_classes_by_action.get(self.action, ItemSerializer)
 
 
-class OfferView(viewsets.GenericViewSet, ListModelMixin, CreateModelMixin, UpdateModelMixin):
+class OfferView(viewsets.GenericViewSet,
+                ListModelMixin,
+                CreateModelMixin,
+                UpdateModelMixin):
     permission_classes = (IsAuthenticated,)
     queryset = Offer.objects.all()
     serializer_classes_by_action = {
