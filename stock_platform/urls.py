@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.conf.urls import url, include
+from django.conf.urls import url, include, re_path
+from django.urls import path
 
 urlpatterns = [
-    url('admin/', admin.site.urls),
-    url('/', include('trade_platform.urls')),
+    re_path('admin/', admin.site.urls, name='admin'),
+    re_path('/', include('trade_platform.urls'), name='trade_platform'),
 ]

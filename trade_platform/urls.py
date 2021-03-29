@@ -5,7 +5,7 @@ from rest_framework_simplejwt import views
 
 from trade_platform.views import InventoryView, WatchListView, ItemView, OfferView
 
-
+app_name = 'trade_platform'
 router = routers.DefaultRouter()
 router.register(r'inventory', InventoryView, basename='inventory')
 router.register(r'watchlist', WatchListView, basename='watchlist')

@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.fields import SerializerMethodField
+
 from trade_platform.models import Item, Inventory, WatchList, Offer
 
 
@@ -33,9 +35,15 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 class DetailItemSerializer(serializers.ModelSerializer):
+    # code = serializers.CharField(source="currency.code")
+    # test = serializers.SerializerMethodField()
+
     class Meta:
         model = Item
         fields = '__all__'
+
+    # def get_test(self, obj):
+    #     return obj.currency.code
 
 
 class UpdateItemSerializer(serializers.ModelSerializer):
