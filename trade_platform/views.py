@@ -1,4 +1,4 @@
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin, RetrieveModelMixin, CreateModelMixin
@@ -63,12 +63,6 @@ class ItemView(viewsets.GenericViewSet,
         'create': DetailItemSerializer,
     }
 
-    # def create(self, request, *args, **kwargs):
-    #     cuurency_objects = {}
-    #
-    #     for elem in self.get_queryset().select_related('currency'):
-    #         cuurency_objects[elem.id] = elem.currency.code
-    #     return cuurency_objects
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         return Response("Incorrect request",
@@ -100,4 +94,3 @@ class OfferView(viewsets.GenericViewSet,
 
     def get_serializer_class(self):
         return self.serializer_classes_by_action.get(self.action, OfferSerializer)
-

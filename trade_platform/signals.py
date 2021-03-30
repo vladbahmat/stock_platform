@@ -5,8 +5,7 @@ from trade_platform.models import User, Profile, WatchList
 
 def create_profile(sender, **kwargs):
     if kwargs['created']:
-        #print(kwargs['instance'].id)
-        user_profile = Profile.objects.create(user=kwargs['instance'])
+        Profile.objects.create(user=kwargs['instance'])
 
 
 def create_watchlist(sender, **kwargs):

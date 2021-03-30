@@ -1,13 +1,14 @@
 from stock_platform.celery import app
 from trade_platform.models import Offer
 from trade_platform.services import take_price, create_trade, is_correct
+from django.shortcuts import get_list_or_404
 
 
 @app.task
 def offer():
-    offers = Offer.objects.all()
-    offers_sell = [offer for offer in offers if (offer.is_sell and offer.is_active)]
-    offers_buy = [offer for offer in offers if (not offer.is_sell and offer.is_active)]
+    offers = list(Offer.objects.filter(is_active=True))
+    offers_sell = [offer for offer in offers if offer.is_sell]
+    offers_buy = [offer for offer in offers if not offer.is_sell]
     for buyer_offer in offers_buy:
         goof_offers = []
         for seller_offer in offers_sell:
