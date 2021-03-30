@@ -3,7 +3,6 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin, RetrieveModelMixin, CreateModelMixin
 
-
 from trade_platform.serializers import ItemSerializer, OfferSerializer, InventorySerializer, \
     UpdateItemSerializer, UpdateOfferSerializer, DetailItemSerializer, DetailWatchListSerializer, \
     WatchListSerializer
@@ -75,12 +74,13 @@ class ItemView(viewsets.GenericViewSet,
 class OfferView(viewsets.GenericViewSet,
                 ListModelMixin,
                 CreateModelMixin,
-                UpdateModelMixin):
+                UpdateModelMixin,
+                RetrieveModelMixin):
     permission_classes = (IsAuthenticated,)
     queryset = Offer.objects.all()
     serializer_classes_by_action = {
         'list': OfferSerializer,
-        'retrieve': DetailItemSerializer,
+        'retrieve': OfferSerializer,
         'partial_update': UpdateOfferSerializer,
         'create': OfferSerializer,
     }

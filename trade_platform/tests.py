@@ -1,11 +1,4 @@
-import pytest
 from django.contrib.auth.models import User
-from django.urls import reverse
-from rest_framework.test import APIClient
-
-from trade_platform.serializers import ItemSerializer
-from trade_platform.conftest import access_db
-from trade_platform.models import Item, WatchList, Profile
 
 
 def test_my_user(create_user):
@@ -45,17 +38,24 @@ def test_offer_create(client, login, create_user, create_item):
     url = '/trade_platform/offer/'
     data = {"item": create_item.id, "quantity": 20}
     response = client.post(url, data, format='json')
-    assert response.status_code == 400 #can't create offer with more than 10 item one time
+    assert response.status_code == 400  #can't create offer with more than 10 item one time
     data = {"item": create_item.id, "quantity": 5}
     response = client.post(url, data, format='json')
     assert response.status_code == 201
 
 
-def test_offer_list(client, login, create_user, create_item):
+def test_offer_list(client, login, create_item):
     url = '/trade_platform/offer/'
-    data = {"item": create_item.id, "quantity": 20}
-    response = client.post(url, data, format='json')
     response = client.get(url)
+    assert response.status_code == 200
+
+
+def test_offer_retrieve(client, login, create_user, create_item):
+    url = '/trade_platform/offer/'
+    data = {"item": create_item.id, "quantity": 5}
+    response = client.post(url, data, format='json')
+    #print(response.data)
+    response = client.get('/trade_platform/offer/{}/'.format(response.data['id']))
     assert response.status_code == 200
 
 

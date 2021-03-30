@@ -1,5 +1,5 @@
 from django.db.models.signals import post_save
-from django.dispatch import receiver
+
 from trade_platform.models import User, Profile, WatchList
 
 

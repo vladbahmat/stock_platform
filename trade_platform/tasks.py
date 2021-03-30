@@ -1,7 +1,6 @@
 from stock_platform.celery import app
 from trade_platform.models import Offer
 from trade_platform.services import take_price, create_trade, is_correct
-from django.shortcuts import get_list_or_404
 
 
 @app.task
