@@ -6,7 +6,7 @@ from django.shortcuts import get_list_or_404
 
 @app.task
 def offer():
-    offers = list(Offer.objects.filter(is_active=True))
+    offers = Offer.objects.filter(is_active=True).select_related('person')
     offers_sell = [offer for offer in offers if offer.is_sell]
     offers_buy = [offer for offer in offers if not offer.is_sell]
     for buyer_offer in offers_buy:
