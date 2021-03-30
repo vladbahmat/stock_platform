@@ -58,6 +58,7 @@ def test_offer_list(client, login, create_user, create_item):
     response = client.get(url)
     assert response.status_code == 200
 
+
 def test_item_create(client, login, item_data):
     """Creating item with good data"""
     url = '/trade_platform/item/'

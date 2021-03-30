@@ -4,9 +4,7 @@ from trade_platform.models import Inventory, Trade
 
 
 def create_trade(buyer_offer, seller_offer):
-    if not Inventory.objects.filter(person=buyer_offer.person, item=buyer_offer.item).exists():
-        inv = Inventory(person=buyer_offer.person, item=buyer_offer.item, quantity=0)
-        inv.save()
+    Inventory.objects.get_or_create(person=buyer_offer.person, item=buyer_offer.item)
     quantity = buyer_offer.quantity if buyer_offer.quantity <= seller_offer.quantity else seller_offer.quantity
     total_price = quantity * take_price(seller_offer)
     trade = Trade(item=buyer_offer.item, quantity=quantity, seller=seller_offer.person, seller_offer=seller_offer,
