@@ -104,15 +104,18 @@ class OfferView(viewsets.GenericViewSet,
     def change_price(self, request):
         Offer.objects.filter(pk__in=request.data['offers']).update(price=request.data['price'])
         return Response("Changed successfully")
+    #3 items 30ms
 
     @action(detail=False, methods=['post'], url_path='change_price_ser')
     def change_price_ser(self, request):
         for offer in Offer.objects.filter(pk__in=request.data['offers']):
             ChangePriceSerializer(data=offer.__dict__).update(offer, request.data).save()
         return Response("Changed successfully")
+    #3 items 500+ms
 
     @action(detail=False, methods=['post'], url_path='change_price_task')
     def change_price_task(self, request):
-        info = request
-        change_price.s(info)
+        info = request.data
+        change_price.apply_async([info])
         return Response("Changed successfully")
+    #3 items 12ms
