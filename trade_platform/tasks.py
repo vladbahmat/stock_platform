@@ -18,3 +18,8 @@ def offer():
                 if take_price(offer) < take_price(best_offer):
                     best_offer = offer
             create_trade(buyer_offer, best_offer)
+
+
+@app.task
+def change_price(info):
+    Offer.objects.filter(pk__in=info.data['offers']).update(price=info.data['price'])

@@ -15,6 +15,3 @@ def create_watchlist(sender, **kwargs):
 
 post_save.connect(create_profile, sender=User)
 post_save.connect(create_watchlist, sender=Profile)
-
-
-
