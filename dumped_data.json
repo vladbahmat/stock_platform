@@ -1,0 +1,250 @@
+[
+{
+   "model": "trade_platform.profile",
+   "pk": 1,
+   "fields": {
+      "user": 1,
+      "balance": "5200.00000",
+      "currency": null
+   }
+},
+{
+   "model": "trade_platform.profile",
+   "pk": 2,
+   "fields": {
+      "user": 2,
+      "balance": "4800.00000",
+      "currency": null
+   }
+},
+{
+   "model": "trade_platform.item",
+   "pk": 1,
+   "fields": {
+      "name": "admin",
+      "code": "admin",
+      "currency": null,
+      "description": " "
+   }
+},
+{
+   "model": "trade_platform.item",
+   "pk": 2,
+   "fields": {
+      "name": "Test",
+      "code": "test",
+      "currency": null,
+      "description": "...."
+   }
+},
+{
+   "model": "trade_platform.item",
+   "pk": 3,
+   "fields": {
+      "name": "11",
+      "code": "11",
+      "currency": null,
+      "description": " "
+   }
+},
+{
+   "model": "trade_platform.item",
+   "pk": 4,
+   "fields": {
+      "name": "added",
+      "code": "added",
+      "currency": null,
+      "description": " "
+   }
+},
+{
+   "model": "trade_platform.watchlist",
+   "pk": 1,
+   "fields": {
+      "person": 1,
+      "item": [
+         1,
+         2
+      ]
+   }
+},
+{
+   "model": "trade_platform.watchlist",
+   "pk": 2,
+   "fields": {
+      "person": 2,
+      "item": []
+   }
+},
+{
+   "model": "trade_platform.inventory",
+   "pk": 1,
+   "fields": {
+      "person": 2,
+      "item": 2,
+      "quantity": -5
+   }
+},
+{
+   "model": "trade_platform.inventory",
+   "pk": 2,
+   "fields": {
+      "person": 1,
+      "item": 2,
+      "quantity": 15
+   }
+},
+{
+   "model": "trade_platform.offer",
+   "pk": 1,
+   "fields": {
+      "person": 1,
+      "item": 2,
+      "quantity": 0,
+      "price": "100.00000",
+      "is_active": false,
+      "is_sell": false
+   }
+},
+{
+   "model": "trade_platform.offer",
+   "pk": 2,
+   "fields": {
+      "person": 2,
+      "item": 2,
+      "quantity": 5,
+      "price": "100.00000",
+      "is_active": true,
+      "is_sell": true
+   }
+},
+{
+   "model": "trade_platform.offer",
+   "pk": 3,
+   "fields": {
+      "person": 1,
+      "item": null,
+      "quantity": 0,
+      "price": null,
+      "is_active": true,
+      "is_sell": true
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 1,
+   "fields": {
+      "item": 2,
+      "seller": 1,
+      "buyer": 2,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 1,
+      "buyer_offer": 2
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 2,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 3,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 4,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 5,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 6,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 7,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 8,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+},
+{
+   "model": "trade_platform.trade",
+   "pk": 9,
+   "fields": {
+      "item": 2,
+      "seller": 2,
+      "buyer": 1,
+      "quantity": 5,
+      "description": "",
+      "seller_offer": 2,
+      "buyer_offer": 1
+   }
+}
+]

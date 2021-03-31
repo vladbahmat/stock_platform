@@ -67,3 +67,13 @@ class UpdateOfferSerializer(serializers.ModelSerializer):
     class Meta:
         model = Offer
         fields = ('is_active', 'is_sell', 'price', 'quantity', 'item')
+
+
+class ChangePriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Offer
+        fields = '__all__'
+
+    def update(self, instance, validated_data):
+        instance.price = validated_data.get('price', instance.price)
+        return instance

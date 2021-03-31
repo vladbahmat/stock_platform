@@ -23,7 +23,6 @@ def test_watchlist_retrieve(client, login, create_user):
 
 def test_watchlist_update(client, login, create_user, create_item):
     """Add new item, then update this item"""
-    url = '/trade_platform/item/'
     user = create_user
     item_before = user.profile.watchlist
     new_data = {'item': [create_item.id]}
@@ -39,7 +38,7 @@ def test_offer_create(client, login, create_user, create_item):
     data = {"item": create_item.id, "quantity": 20}
     response = client.post(url, data, format='json')
     assert response.status_code == 400  #can't create offer with more than 10 item one time
-    data = {"item": create_item.id, "quantity": 5}
+    data = {"item": create_item.id, "quantity": 15}
     response = client.post(url, data, format='json')
     assert response.status_code == 201
 
@@ -86,7 +85,7 @@ def test_item_update(client, login, item_data):
     assert item_before != item_after
 
 
-def test_item_list( client, login):
+def test_item_list(client, login):
     """Show item's list"""
     url = '/trade_platform/item/'
     response = client.get(url)

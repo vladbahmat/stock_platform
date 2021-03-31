@@ -1,11 +1,14 @@
+import time
+
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, UpdateModelMixin, RetrieveModelMixin, CreateModelMixin
+from rest_framework.decorators import action
 
 from trade_platform.serializers import ItemSerializer, OfferSerializer, InventorySerializer, \
     UpdateItemSerializer, UpdateOfferSerializer, DetailItemSerializer, DetailWatchListSerializer, \
-    WatchListSerializer
+    WatchListSerializer, ChangePriceSerializer
 from trade_platform.models import Inventory, Item, WatchList, Offer
 
 
@@ -94,3 +97,18 @@ class OfferView(viewsets.GenericViewSet,
 
     def get_serializer_class(self):
         return self.serializer_classes_by_action.get(self.action, OfferSerializer)
+
+    @action(detail=False, methods=['post'], url_path='change_price')
+    def change_price(self, request):
+        start = time.time()
+        Offer.objects.filter(pk__in=request.data['offers']).update(price=request.data['price'])
+        print(time.time()-start)
+        return Response("Changed successfully")
+
+    @action(detail=False, methods=['post'], url_path='change_price_ser')
+    def change_price_ser(self, request):
+        start = time.time()
+        for offer in Offer.objects.filter(pk__in=request.data['offers']):
+            ChangePriceSerializer(data=offer.__dict__).update(offer, request.data).save()
+        print(time.time()-start)
+        return Response("Changed successfully")
