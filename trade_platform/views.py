@@ -9,7 +9,7 @@ from rest_framework.decorators import action
 from trade_platform.serializers import ItemSerializer, OfferSerializer, InventorySerializer, \
     UpdateItemSerializer, UpdateOfferSerializer, DetailItemSerializer, DetailWatchListSerializer, \
     WatchListSerializer, ChangePriceSerializer
-from trade_platform.models import Inventory, Item, WatchList, Offer
+from trade_platform.models import Inventory, Item, WatchList, Offer, User
 from trade_platform.tasks import change_price, send_item_update_notificate
 
 
@@ -68,10 +68,10 @@ class ItemView(viewsets.GenericViewSet,
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
+        send_item_update_notificate.apply_async([instance.id])
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        send_item_update_notificate(instance)
         return Response(serializer.data)
 
     def http_method_not_allowed(self, request, *args, **kwargs):

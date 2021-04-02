@@ -1,7 +1,7 @@
 from stock_platform.celery import app
-from trade_platform.models import Offer
+from trade_platform.models import Offer, Inventory, User
 from trade_platform.services import take_price, create_trade, is_correct
-
+from django.core.mail import send_mail
 
 @app.task
 def offer():
@@ -26,5 +26,6 @@ def change_price(info):
 
 
 @app.task
-def send_item_update_notificate(id, change):
-    pass
+def send_item_update_notificate(id):
+    users = User.objects.filter(profile__inventory__item=id).values_list('email', flat=True)
+    send_mail('shrek', 'shrek the best movie', 'uservice589@gmail.com', users)
