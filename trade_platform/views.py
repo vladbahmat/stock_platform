@@ -10,7 +10,7 @@ from trade_platform.serializers import ItemSerializer, OfferSerializer, Inventor
     UpdateItemSerializer, UpdateOfferSerializer, DetailItemSerializer, DetailWatchListSerializer, \
     WatchListSerializer, ChangePriceSerializer
 from trade_platform.models import Inventory, Item, WatchList, Offer
-from trade_platform.tasks import change_price
+from trade_platform.tasks import change_price, send_item_update_notificate
 
 
 class InventoryView(viewsets.GenericViewSet,
@@ -62,10 +62,17 @@ class ItemView(viewsets.GenericViewSet,
     serializer_classes_by_action = {
         'list': ItemSerializer,
         'retrieve': DetailItemSerializer,
-        'partial_update': UpdateItemSerializer,
+        'update': UpdateItemSerializer,
         'create': DetailItemSerializer,
     }
 
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        send_item_update_notificate(instance)
+        return Response(serializer.data)
 
     def http_method_not_allowed(self, request, *args, **kwargs):
         return Response("Incorrect request",

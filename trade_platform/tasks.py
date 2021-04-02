@@ -23,3 +23,8 @@ def offer():
 @app.task
 def change_price(info):
     Offer.objects.filter(pk__in=info['offers']).update(price=info['price'])
+
+
+@app.task
+def send_item_update_notificate(id, change):
+    pass
