@@ -1,6 +1,10 @@
 from rest_framework.generics import get_object_or_404
 
 from trade_platform.models import Inventory, Trade
+from django.core.mail import send_mail
+
+from django.utils import translation
+from django.utils.translation import ugettext_lazy as _
 
 def get_total_price(quantity, price):
     return quantity*price
@@ -9,10 +13,10 @@ def get_total_price(quantity, price):
 def update_balance(buyer_offer, seller_offer, quantity):
     profile = buyer_offer.person
     profile.balance -= get_total_price(quantity, take_price(seller_offer))
-    profile.save()
+    profile.save(update_fields=('balance',))
     profile = seller_offer.person
     profile.balance += get_total_price(quantity, take_price(seller_offer))
-    profile.save()
+    profile.save(update_fields=('balance',))
 
 
 def update_inventories(buyer_offer, seller_offer, quantity):
@@ -20,8 +24,8 @@ def update_inventories(buyer_offer, seller_offer, quantity):
     seller_inventory = get_object_or_404(Inventory, person=seller_offer.person, item=seller_offer.item)
     seller_inventory.quantity -= quantity
     buyer_inventory.quantity += quantity
-    buyer_inventory.save()
-    seller_inventory.save()
+    buyer_inventory.save(update_fields=('quantity',))
+    seller_inventory.save(update_fields=('quantity',))
 
 
 def get_quantity(buyer_offer, seller_offer):
@@ -72,3 +76,10 @@ def is_correct(buyer_offer, seller_offer):
 
 def take_price(offer):
     return offer.price / offer.quantity
+
+
+def send_email_language_notification(email, code):
+    some_text = _('Hello')
+    with translation.override(code):
+        print(translation.gettext(some_text))
+        send_mail('shrek', translation.gettext(some_text) , 'uservice589@gmail.com', email)

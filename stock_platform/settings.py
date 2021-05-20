@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = 'tknrp$a-jvl4kpi*8visfwu35kxd4rnaqg*k$qdun0kg6axjki'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -43,7 +43,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'trade_platform',
     'celery',
+    'drf_yasg',
 ]
+
+USE_SWAGGER = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -51,7 +54,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_SCHEMA_CLASSES': [
+        'rest_framework.schemas.coreapi.AutoSchema',
+    ],
 }
 
 CELERY_BROKER_URL = "redis://redis:6379"
@@ -110,7 +116,7 @@ DATABASES = {
         'NAME': 'stock_platform',
         'USER': 'postgres',
         'PASSWORD': 'Lipetsk4859',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -145,6 +151,14 @@ EMAIL_USE_SSL = False
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('ru', 'Russian'),
+    ('en', 'English'),
+    ('ch', 'Chinese'),
+)
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
 TIME_ZONE = 'UTC'
 

@@ -22,5 +22,3 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         item,_ = Item.objects.get_or_create(name=options['name'], code=options['code'])
-        item.save()
-

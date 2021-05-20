@@ -21,7 +21,6 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        user,_ = User.objects.get_or_create(username=options['username'])
-        user.set_password(options['password'])
-        user.save()
-
+        user, created = User.objects.get_or_create(username=options['username'])
+        if not created:
+            user.set_password(options['password'])

@@ -18,9 +18,7 @@ def client():
 
 @pytest.fixture
 def create_user(db):
-    user = User.objects.create_user(username='admin', password='admin')
-    user.save()
-    return user
+    return User.objects.create_user(username='admin', password='admin')
 
 
 @pytest.fixture
@@ -37,13 +35,10 @@ def login(client, get_token):
 
 @pytest.fixture
 def item_data():
-    data = {'name': 'test', 'code': 'test'}
-    return data
+    return {'name': 'test', 'code': 'test'}
 
 
 @pytest.fixture
 def create_item(item_data):
-    item = Item.objects.create(name='test', code='test')
-    item.save()
-    return item
+    return Item.objects.create(name='test', code='test')
 

@@ -1,6 +1,29 @@
 from rest_framework import serializers
 
-from trade_platform.models import Item, Inventory, WatchList, Offer
+from trade_platform.models import Item, Inventory, WatchList, Offer, WorkShift, Position
+from django.db import connection
+
+
+class PositionIndexValueSerializer(serializers.ModelSerializer):
+    index_value = serializers.IntegerField()
+    class Meta:
+        model = Position
+        fields = ('id', 'index_value')
+
+
+class PositionSerializer(serializers.ModelSerializer):
+    #full_name = serializers.CharField()
+    #workshifts_count = serializers.IntegerField()
+    #position_workshifts = serializers.ListField()
+    class Meta:
+        model = Position
+        fields = ('id', 'first_name')
+
+
+class WorkShiftSerrializer(serializers.Serializer):
+    name = serializers.CharField(max_length=30, read_only=True)
+    is_active = serializers.BooleanField()
+
 
 
 class InventorySerializer(serializers.ModelSerializer):
