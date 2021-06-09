@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from trade_platform.models import Profile, Currency, Trade, Item, Offer, WatchList, Inventory, WorkShift, Position, \
     WorkShiftPlan, Location, UserConfig
-from trade_platform.admin_methods import change_workshifts_relation
+from trade_platform.admin.admin_methods import change_workshifts_relation
 
 class ItemAdmin(admin.ModelAdmin):
     search_fields = ('code',)

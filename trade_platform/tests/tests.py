@@ -40,7 +40,7 @@ def test_offer_create(client, login, create_user, create_item):
     assert response.status_code == 400  #can't create offer with more than 10 item one time
     data = {"item": create_item.id, "quantity": 15}
     response = client.post(url, data, format='json')
-    assert response.status_code == 201
+    assert response.status_code == 400
 
 
 def test_offer_list(client, login, create_item):

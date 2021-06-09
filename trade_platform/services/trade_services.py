@@ -1,10 +1,7 @@
 from rest_framework.generics import get_object_or_404
 
 from trade_platform.models import Inventory, Trade
-from django.core.mail import send_mail
 
-from django.utils import translation
-from django.utils.translation import ugettext_lazy as _
 
 def get_total_price(quantity, price):
     return quantity*price
@@ -76,10 +73,3 @@ def is_correct(buyer_offer, seller_offer):
 
 def take_price(offer):
     return offer.price / offer.quantity
-
-
-def send_email_language_notification(email, code):
-    some_text = _('Hello')
-    with translation.override(code):
-        print(translation.gettext(some_text))
-        send_mail('shrek', translation.gettext(some_text) , 'uservice589@gmail.com', email)
