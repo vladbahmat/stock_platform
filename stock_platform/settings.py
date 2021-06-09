@@ -76,6 +76,9 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=2),
 }
 
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51J0LoOBRfThoA9KkAXelyX513vWiqISZa8gDBBZQht2vKeYUYwVuTn4crsv5FEfsddNgPw5MSKlz6Ylm3iQfHRnZ00nPjelsFj'
+STRIPE_SECRET_KEY = 'sk_test_51J0LoOBRfThoA9KkIh2stT6yCoyQJHAJO6JxaPpoVq4WdXhW5WGKNC8jbnNxfqSC5FDAy07ru9KRtdUUbJZQEIKw00KPrQkGCo'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,6 +87,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'trade_platform.middleware.IsActiveMiddleware'
 ]
 
 ROOT_URLCONF = 'stock_platform.urls'

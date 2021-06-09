@@ -1,7 +1,8 @@
 from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt import views
-from trade_platform.views import InventoryView, WatchListView, ItemView, OfferView, PositionView, WorkShiftView
+from trade_platform.views import InventoryView, WatchListView, ItemView, OfferView, PositionView, WorkShiftView, \
+    StripeView
 
 app_name = 'trade_platform'
 router = routers.DefaultRouter()
@@ -11,6 +12,7 @@ router.register(r'offer', OfferView, basename='offer')
 router.register(r'item', ItemView, basename='item')
 router.register('position', PositionView, basename='position')
 router.register('workshift', WorkShiftView, basename='workshift')
+router.register('stripe', StripeView, basename='stripe')
 
 
 urlpatterns = [

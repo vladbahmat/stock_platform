@@ -1,4 +1,5 @@
 import time
+import stripe
 import datetime
 from django.db import connection
 from django.db.models import When, Case, Value, IntegerField, BooleanField, F
@@ -18,6 +19,7 @@ from trade_platform.tasks import change_price, send_item_update_notificate
 from trade_platform.services import send_email_language_notification
 from django.utils import translation
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 class WorkShiftView(viewsets.GenericViewSet):
     permission_classes = (AllowAny,)
@@ -103,6 +105,34 @@ class PositionView(viewsets.GenericViewSet):
             workhsifts_count=Count('workshifts', output_field=IntegerField())
         ).values('id','full_name',  'workhsifts_count')
         return Response(data)
+
+
+class StripeView(viewsets.GenericViewSet,
+                 ListModelMixin):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    @action(detail=False, methods=['POST'], url_path='retrieve_charge')
+    def retrieve_charge(self, request, *args, **kwargs):
+        stripe_charge = stripe.Charge.retrieve(
+            request.data['charge_id'],
+            stripe_account='acct_1J0LoOBRfThoA9Kk'
+        )
+
+        return Response(stripe_charge)
+
+    @action(detail=False, methods=['POST'], url_path='add_customer')
+    def add_customer(self, request, *args, **kwargs):
+        stripe_charge = stripe.Customer.create()
+        return Response(stripe_charge)
+
+    @action(detail=False, methods=['POST'], url_path='add_charge')
+    def add_charge(self, request, *args, **kwargs):
+        stripe_charge = stripe.Charge.create(
+            amount=request.data['amount'],
+            currency=request.data['currency'],
+            source=request.data['source'],
+            description=request.data['description'],
+        )
+        return Response(stripe_charge)
 
 
 class InventoryView(viewsets.GenericViewSet,
