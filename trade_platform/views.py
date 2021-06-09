@@ -121,19 +121,25 @@ class StripeView(viewsets.GenericViewSet,
 
     @action(detail=False, methods=['POST'], url_path='add_customer')
     def add_customer(self, request, *args, **kwargs):
-        stripe_charge = stripe.Customer.create()
+        stripe_charge = stripe.Customer.create(**request.data)
+
         return Response(stripe_charge)
 
     @action(detail=False, methods=['POST'], url_path='add_charge')
     def add_charge(self, request, *args, **kwargs):
         stripe_charge = stripe.Charge.create(
-            amount=request.data['amount'],
-            currency=request.data['currency'],
-            source=request.data['source'],
-            description=request.data['description'],
+            **request.data
         )
+
         return Response(stripe_charge)
 
+    @action(detail=False, methods=['POST'], url_path='retrieve_customer')
+    def retrieve_customer(self, request, *args, **kwargs):
+        stripe_charge = stripe.Customer.retrieve(
+            "cus_JdgpxuuprF25YS"
+        )
+
+        return Response(stripe_charge)
 
 class InventoryView(viewsets.GenericViewSet,
                     ListModelMixin):

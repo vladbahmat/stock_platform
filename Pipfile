@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 django = "*"
 stripe = "*"
+drf-yasg = "*"
 
 [dev-packages]
 
