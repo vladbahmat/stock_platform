@@ -1,5 +1,5 @@
 from stock_platform.celery import app
-from trade_platform.models import Offer, Inventory, User
+from trade_platform.models import Offer, User
 from trade_platform.services import take_price, create_trade, is_correct
 from django.core.mail import send_mail
 

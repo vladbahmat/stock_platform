@@ -54,7 +54,7 @@ class ShiftPlanCreator:
     @staticmethod
     def assign_positions(work_shifts, positions):
         for work_shift in work_shifts:
-            work_shift.positions.set(positions) #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            work_shift.positions.set(positions)
 
 
     @staticmethod

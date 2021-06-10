@@ -2,9 +2,8 @@ import datetime
 
 from django.db import models
 
-from django.db.models.functions import Concat
-from django.db.models import Value, Count, QuerySet, F, IntegerField, ExpressionWrapper, DateField, Case, When
-from django.db.models.functions import Cast, TruncYear
+from django.db.models import Count, QuerySet, IntegerField, Case, When
+from django.db.models.functions import Cast
 from django.db.models.functions import ExtractIsoYear, ExtractMonth
 from django.contrib.postgres.aggregates import ArrayAgg
 
@@ -24,10 +23,6 @@ class PositionFullnameManager(models.Manager):
 
     def get_queryset(self):
         query = NoDeleteQuerySet(self.model, using=self._db)
-
-        # query = query.annotate(
-        #     full_name=Concat('first_name', Value(' '), 'last_name'),
-        # )
 
         return query
 

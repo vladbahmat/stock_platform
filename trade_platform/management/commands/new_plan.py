@@ -1,9 +1,7 @@
-import datetime
-
 from django.core.management.base import BaseCommand
 
-from trade_platform.create_test_data import ShiftPlanCreator
-from trade_platform.models import WorkShiftPlan, WorkShift, Position
+from trade_platform.services.create_test_data import ShiftPlanCreator
+
 
 class Command(BaseCommand):
     """
