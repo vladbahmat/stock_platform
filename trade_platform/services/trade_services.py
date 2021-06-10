@@ -1,6 +1,18 @@
+import stripe
+from django.conf import settings
 from rest_framework.generics import get_object_or_404
 
-from trade_platform.models import Inventory, Trade
+from trade_platform.models import Inventory, Trade, Customer
+
+
+def make_change(user_id, price):
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    stripe.Charge.create(
+        customer=Customer.objects.get(user_id=user_id).customer_id,
+        currency='usd',
+        amount=price
+        )
 
 
 def get_total_price(quantity, price):
@@ -13,6 +25,7 @@ def update_balance(buyer_offer, seller_offer, quantity):
     profile.save(update_fields=('balance',))
     profile = seller_offer.person
     profile.balance += get_total_price(quantity, take_price(seller_offer))
+    make_change(profile.user_id, int(get_total_price(quantity, take_price(seller_offer)))*100)
     profile.save(update_fields=('balance',))
 
 

@@ -10,3 +10,4 @@ from trade_platform.models.user_config import *
 from trade_platform.models.watchlist import *
 from trade_platform.models.workshift import *
 from trade_platform.models.workshift_plan import *
+from trade_platform.models.customer import *

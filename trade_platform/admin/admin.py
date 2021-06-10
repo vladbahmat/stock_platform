@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from trade_platform.models import Profile, Currency, Trade, Item, Offer, WatchList, Inventory, WorkShift, Position, \
-    WorkShiftPlan, Location, UserConfig
+    WorkShiftPlan, Location, UserConfig, Customer
 from trade_platform.admin.admin_methods import change_workshifts_relation
 
 class ItemAdmin(admin.ModelAdmin):
@@ -32,7 +32,7 @@ class WorkShiftPlanAdmin(admin.ModelAdmin):
     actions = [change_workshifts_relation]
 
 trade_platform_models = (Profile, Currency, Trade, Offer, Inventory, WorkShift, Position, Location,
-                         UserConfig)
+                         UserConfig, Customer)
 admin.site.register(trade_platform_models)
 admin.site.register(WorkShiftPlan, WorkShiftPlanAdmin)
 admin.site.register(WatchList, WatchListAdmin)
